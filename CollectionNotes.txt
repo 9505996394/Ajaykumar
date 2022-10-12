@@ -1,0 +1,192 @@
+What is Collections in C#?
+Collections are similar to Arrays, it provides a more flexible 
+way of working with a group of objects.
+===========================================================================
+using System.Collections;
+--------------------------------------------------------------------------------
+In non-generic collections, each element can represent a value of a different type.
+The collection size is not fixed.Items from the collection can be added or removed at runtime. 
+Non-generic collections hold  elements of different datatypes
+Element :- operations return a single, specific element from a sequence.
+-------------------------------------------------------------------------------------------
+What Are types of Non-generic:-
+-------------------------------
+1) ArrayList :- Stores Object of any type like an array
+2) Sorted List :- stores key and value pairs 
+3) Stack :- Stores the values in LIFO Style (Last in first out)
+4) Quene :- Stores the values in FIFO(FIRST IN FIRST OUT )
+4) HASTABLE :- Stores key and value pairs 
+============================================================================================
+ArrayList c# :-
+--------------
+In C#, the ArrayList is a non-generic collection of objects
+whose size increases dynamically. It is the same as Array except
+that its size increases dynamically.
+---------------------------------------------------------------------------
+Types of Creating Array in c# :-
+ArrayList arlist = new ArrayList(); 
+// or 
+var arlist = new ArrayList(); // recommende
+(An arraylist can contain multiple null and dupilcates values )
+---------------------------------------------
+using System;
+using System.Collections;
+
+class GFG
+{
+	public static void Main(string[] args)
+	{
+		ArrayList arraylist = new ArrayList();
+		arraylist.Add(10);
+		arraylist.Add("This is a string");
+		arraylist.Add(12.25);
+
+        arraylist.AddRange(new ArrayList() {"Ajakumar",24,25.20 });
+		arraylist.Insert(3, "Raju");
+		arraylist.Insert(44, "Naresh");
+		arraylist.Remove("Naresh");
+
+        foreach (var values in arraylist) 
+        {
+            Console.WriteLine(values);
+        }
+	}
+}
+============================================================================================
+Sorted list  :- sortedlist stores key and value pairs in the ascending order of key
+The SortedList class represents a collection of key-and-value pairs that are sorted by
+the keys and are accessible by key and by index.
+Methods and Properties of the SortedList Class:-
+-------------------------------------------------
+1)Capacity :-Gets or sets the capacity of the SortedList.
+2)Count :-Gets the number of elements contained in the SortedList.
+3)Keys:-Gets the keys in the SortedList.
+4)Values :-Gets the values in the SortedList.
+------------------------------------------------------
+Exmaple:-
+using System;
+using System.Collections;
+using System.Collections.Generic;
+class GFG
+{
+	public static void Main(string[] args)
+	{
+		SortedList sorted = new SortedList();
+		sorted.Add(3, "Number three");
+		sorted.Add(5, "Number five");
+		sorted.Add(2, "Number two");
+		sorted.Add(4, "Number four");
+		sorted.Add(1, "Number one");
+		sorted.Remove(1);
+        foreach (DictionaryEntry list in sorted)
+        {
+            Console.WriteLine($"key :{list.Key},value :{list.Value}");
+        }
+	}
+}
+=================================================================================================
+Stack :- Stack is a special type of collection that stores
+elements in LIFO style (Last In First Out).
+Properties :- 
+1)Count:-Returns the total count of elements in the Stack.
+Methods :-
+1)Push(T):- Inserts an item at the top of the stack.
+2)Peek() :- Returns the top item from the stack.
+3)Pop() :-Removes and returns items from the top of the stack.
+4)Contains(T) :-Checks whether an item exists in the stack or not.
+5)Clear() :-Removes all items from the stack.
+Exmaple:-
+-----------
+using System;
+using System.Collections;
+using System.Collections.Generic;
+class GFG
+{
+	public static void Main(string[] args)
+	{
+		Stack st = new Stack();
+		st.Push("Hello world");
+		st.Push(1);
+		st.Push(2);
+		st.Push(3);
+		st.Push(4.5);
+		st.Push(null);
+		st.Push("END HELLO WORLD");
+        Console.WriteLine($"The peak of stack is  -{st.Peek()}");
+        Console.WriteLine($"The  stack is 3 -{st.Contains(3)}");
+		st.Pop();
+		st.Clear();
+		foreach (var stac in st)
+        {
+            Console.WriteLine(stac);
+        }
+	}
+}
+================================================================================================
+Quene :-A Queue in C# represents a first-in, first-out (FIFO) collection of objects
+It is used when you need a first-in, first-out access of items.
+When you add an item in the list,
+it is called enqueue, and when you remove an item, it is called dequeue.
+===> The quene collection is the oppostie of the stack collection
+===> Allows :- multiple dupilcates values and null values
+using System;
+using System.Collections;
+using System.Collections.Generic;
+class GFG
+{
+	public static void Main(string[] args)
+	{
+		Queue qu = new Queue();
+		qu.Enqueue(1);
+		qu.Enqueue(3);
+		qu.Enqueue(31);
+		qu.Enqueue("This is my string");
+		qu.Enqueue(null);
+		qu.Enqueue("This is last value");
+
+        Console.WriteLine($"Number of elemnts {qu.Count}");
+         Console.WriteLine($"Number of elemnts {qu.Peek()}");
+        foreach (var quene in qu)
+        {
+            Console.WriteLine(quene);
+        }
+
+    }
+}
+=============================================================================================
+DictionaryEntry :-This C# type is used with Hashtable.
+The Hashtable collection provides a way to access objects based on a key.
+We use DictionaryEntry in a foreach-loop.
+Exmaple :- foreach (DictionaryEntry de in openWith) {
+Console.WriteLine("Key = {0}, Value = {1}", de.Key, de.Value);
+============================================================================================  
+C#-Hashtable :-The Hashtable is a non-generic collection that stores key-value pairs, 
+similar to generic Dictionary<TKey, TValue> collection
+The Hashtable class represents a collection of key-and-value pairs
+that are organized based on the hash code of the key
+The Hashtable collection can include all the elements of Dictionary, as shown below.
+Exmaple:-
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
+class GFG
+{
+	public static void Main(string[] args)
+	{
+		Dictionary<int, string> myDicitionary = new Dictionary<int, string>();
+		myDicitionary.Add(1, "one");
+		myDicitionary.Add(6, "Number 6");
+
+		Hashtable myhastable = new Hashtable(myDicitionary);
+		string valueone = (string) myhastable[1];
+        Console.WriteLine($"value of one = {valueone}");
+		myhastable.Remove(1);
+		myhastable.Clear();
+        foreach (DictionaryEntry has in myhastable)
+        {
+            Console.WriteLine($"key ;{has.Key},value :{has.Value}");
+        }
+
+    }
+}
