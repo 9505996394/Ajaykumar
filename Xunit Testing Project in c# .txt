@@ -1,0 +1,161 @@
+using DocuSign.eSign.Model;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NeoBankContainers.Services.Exchange.API.Controllers;
+using NeoBankContainers.Services.Exchange.API.Modules.Items.Applicationserives;
+using NeoBankContainers.Services.Exchange.API.Modules.Items.Context;
+using NeoBankContainers.Services.Exchange.API.Modules.Items.Eninty;
+using System.Runtime.InteropServices;
+
+namespace With_Web_API
+{
+    public class UnitTest1
+    {
+        [Fact]
+        public void Test1()
+        {
+            Mock<IItemsCustomer> customer = new Mock<IItemsCustomer>();
+
+            CustomerItems data1 = new CustomerItems()
+            {
+                Id = Guid.Parse("54905419-EF7B-442C-A9CF-3CB4A9678FAE"),
+                Code = 12345,
+                Item = "Chicken",
+                Country = "America",
+                State = "UAS",
+                ModifiedDate = Convert.ToDateTime("2022-09-21 14:14:10.4820000"),
+                Status = "1",
+            };
+            var data = customer.Setup(b => b.GetCustomerDataCode(12345)).Returns(data1);
+            ItemsController controller = new ItemsController(customer.Object);
+            var result = controller.GetCustomerDataCodes(12345);
+            Assert.True(data.Equals(result));
+        }
+        [Fact]
+        public void DbChecking()
+        {
+            Mock<IItemsCustomer> customer = new Mock<IItemsCustomer>();
+            var data = customer.Setup(a => a.GetCustomerDataCode(12345)).Returns(CustomerItems.Equals);
+
+            ItemsController controller = new ItemsController(customer.Object);
+            var result = controller.GetCustomerDataCodes(12345);
+            Assert.True(Equals(result));
+
+
+            // customer.VerifyAll();
+            //var controller = new ItemsController(customer.Object);
+            //int Code = 12345;
+            ////Act  
+            //var data = controller.GetCustomerDataCodes(Code);
+            ////Assert  
+            //Assert.True(Code.Equals(data));
+
+            //var controller = new ItemsController(customer.Object);
+            ////Act  
+            //var data = controller.GetCustomerDataCodes(12345);
+            //data = null;
+            //if (data == null)
+            //    //Assert  
+            //    Assert.IsType<BadRequestResult>(data);
+        }
+    }
+
+}
+===================================================================================================================
+using DocuSign.eSign.Model;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NeoBankContainers.Services.Exchange.API.Controllers;
+using NeoBankContainers.Services.Exchange.API.Modules.TrainDB_Customer.ApplicationService;
+using NeoBankContainers.Services.Exchange.API.Modules.Items.Applicationserives;
+using NeoBankContainers.Services.Exchange.API.Modules.Items.Context;
+using NeoBankContainers.Services.Exchange.API.Modules.Items.Eninty;
+using System.Runtime.InteropServices;
+using NeoBankContainers.Services.Exchange.API.Modules.TrainDB_Customer.Entities;
+using Microsoft.Extensions.Azure;
+
+namespace With_Web_API
+{
+    public class UnitTest1
+    {
+        [Fact]
+        public void Test1()
+        {
+            Mock<IItemsCustomer> customer = new Mock<IItemsCustomer>();
+
+            CustomerItems data1 = new CustomerItems()
+            {
+                Id = Guid.Parse("54905419-EF7B-442C-A9CF-3CB4A9678FAE"),
+                Code = 12345,
+                Item = "Chicken",
+                Country = "America",
+                State = "UAS",
+                ModifiedDate = Convert.ToDateTime("2022-09-21 14:14:10.4820000"),
+                Status = "1",
+            };
+            var data = customer.Setup(b => b.GetCustomerDataCode(12345)).Returns(data1.Equals);
+            ItemsController controller = new ItemsController(customer.Object);
+            var result = controller.GetCustomerDataCodes(12345);
+            Assert.True(data.Equals(result));
+        }
+        [Fact]
+        public async  void DbChecking()
+        {
+
+            var repositoryMock = new Mock<IItemsCustomer>();
+            var title = new CustomerItems();
+            repositoryMock.Setup(r => r.GetCustomerDataCode(12345)).Returns(title.Equals);
+            var controller = new ItemsController(repositoryMock.Object);
+
+            var result = controller.GetCustomerDataCodes(12345);
+            Assert.True(Equals(result));
+            // assert??
+            //Assert.Equal(title,result.Value);
+
+
+            //Mock<IItemsCustomer> customer = new Mock<IItemsCustomer>();
+            //var data = customer.Setup(a => a.GetCustomerDataCode(12345)).Returns(CustomerItems.Equals);
+
+            //ItemsController controller = new ItemsController(customer.Object);
+            //var result = controller.GetCustomerDataCodes(12345);
+            //Assert.True(Equals(result));
+
+
+            // customer.VerifyAll();
+            //var controller = new ItemsController(customer.Object);
+            //int Code = 12345;
+            ////Act  
+            //var data = controller.GetCustomerDataCodes(Code);
+            ////Assert  
+            //Assert.True(Code.Equals(data));
+
+            //var controller = new ItemsController(customer.Object);
+            ////Act  
+            //var data = controller.GetCustomerDataCodes(12345);
+            //data = null;
+            //if (data == null)
+            //    //Assert  
+            //    Assert.IsType<BadRequestResult>(data);
+        }
+        [Fact]
+        public void CustomerData()
+        {
+            CustomerEntity customerEntity = new CustomerEntity()
+            {
+                Id = Guid.Parse("10999241-F93C-40AB-8F14-BE48C1C34D14"),
+                Name = "Akash",
+                PhoneNo = 8249707336,
+                Address = "hyd",
+                gender = "Male",
+                DateOfBirth = Convert.ToDateTime("1994-07-27 13:40:57.0880000"),
+                Status = true,
+                Budget = 1000.00m,
+            };
+            Mock<ICustomerService> Data = new Mock<ICustomerService>();
+            var Cust = Data.Setup(a => a.GetCustomerData(Guid.Parse("10999241-F93C-40AB-8F14-BE48C1C34D14"))).Returns(customerEntity);
+            TrainDbCustomerController trainDbCustomer = new TrainDbCustomerController(Data.Object);
+            var result = trainDbCustomer.GetCustomerData(Guid.Parse("10999241-F93C-40AB-8F14-BE48C1C34D14"));
+            Assert.True(customerEntity.Equals(result));
+        }
+    }
+}
